@@ -7,3 +7,9 @@ It may take a while until it is usable.
 To build this you need:
 * ld - The GNU linker
 * nsam
+
+```bash
+git clone https://github.com/einzigartigerName/xlight.git
+cd xlight
+make
+```
