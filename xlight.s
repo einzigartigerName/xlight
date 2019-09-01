@@ -24,40 +24,40 @@ section .text
 
 _start:
     ; open file
-    mov     rax, 2          ; sys_open = 2
-    mov     rdi, file       ; file = filename
-    mov     rsi, 66         ; O_RDWR + O_CREATE
-    mov     rdx, 0644o      ; permisions
+    mov     rax, 2              ; sys_open = 2
+    mov     rdi, file           ; file = filename
+    mov     rsi, 66             ; O_RDWR + O_CREATE
+    mov     rdx, 0644o          ; permisions
     syscall
 
-    mov     rbx, rax             ; save fd
+    mov     rbx, rax            ; save fd
 
     ; Read from file
-    mov     rdi, rax        ; fd from input-file
-    mov     rax, 0          ; sys_read = 0
-    mov     rsi, input      ; buffer
-    mov     rdx, 32         ; buffer length
+    mov     rdi, rax            ; fd from input-file
+    mov     rax, 0              ; sys_read = 0
+    mov     rsi, input          ; buffer
+    mov     rdx, 32             ; buffer length
     syscall
 
     ; convert buffer to uint32
-    mov     rdi, input      ; buffer to convert
+    mov     rdi, input          ; buffer to convert
     call    ascii_to_int    
 
-    add     rax, 100        ; add 100 to number
+    add     rax, 100            ; add 100 to number
 
     ; write new number to file
-    mov     rdi, rax        ; uint32 to write
-    mov     rsi, rbx        ; fd to write number to
+    mov     rdi, rax            ; uint32 to write
+    mov     rsi, rbx            ; fd to write number to
     call    print_uint32
 
     ; close file
-    mov     rax, 3          ; sys_close = 3
-    mov     rdi, rbx        ; file to close
+    mov     rax, 3              ; sys_close = 3
+    mov     rdi, rbx            ; file to close
     syscall
 
     ; Exit
-    mov     rax, 60         ; sys_exit = 60
-    mov     rdi, 0          ; return value
+    mov     rax, 60             ; sys_exit = 60
+    mov     rdi, 0              ; return value
     syscall
 
 
@@ -78,8 +78,8 @@ ascii_to_int:
     ; rax *= 10 + rcx
     ; rax := total
     ; rcx := digit
-    lea     eax, [rax*4 + rax]    ; rax *= 5
-    lea     eax, [rax*2 + rcx]    ; rax = (rax * 5) * 2 + rcx
+    lea     eax, [rax*4 + rax]  ; rax *= 5
+    lea     eax, [rax*2 + rcx]  ; rax = (rax * 5) * 2 + rcx
 
 .loop_start:
     inc     rdi                 ; next character
@@ -110,7 +110,7 @@ print_uint32:
     div     ecx                 ; eax/10 with remainder in edx
     add     edx, 48             ; digit to ascii
     dec     rsi
-    mov     [rsi], dl            ; put digit into write buffer
+    mov     [rsi], dl           ; put digit into write buffer
 
     test    eax, eax            ; check if 0
     jnz     .digit_to_ascii     ; continue loop
