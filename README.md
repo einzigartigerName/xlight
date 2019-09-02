@@ -1,9 +1,12 @@
 # xlight
-This is my journey writing a lightweight xbacklight alternative for Linux.
-I am using the x86_64 Assembler, so my target is the x86_64 platform.
-It may take a while until it is usable.
+This is an extremly simple and lightweight xbacklight alternative for x86_64 Linux.\
+The installed file-size is less than 10kB.
+### Usage
+```bash
+xlight [+-[0-1234]]
+```
 
-## Build
+### Install
 To build this you need:
 * ld - The GNU linker
 * nsam
@@ -11,5 +14,11 @@ To build this you need:
 ```bash
 git clone https://github.com/einzigartigerName/xlight.git
 cd xlight
-make
+make && sudo make install
+```
+It will auto-configured on build
+
+### Uninstall
+```bash
+sudo make uninstall
 ```
