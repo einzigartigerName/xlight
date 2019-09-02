@@ -1,16 +1,17 @@
-; sys_read        0
-; sys_write       1
-; sys_open        2
-; sys_close       3
-; sys_exit        60      
+; sys_read          0
+; sys_write         1
+; sys_open          2
+; sys_close         3
+; sys_lseek         8
+; sys_exit          60
 
-; stdin           0
-; stdout          1
+; stdin             0
+; stdout            1
 
-; O_RDONLY      0
-; O_WRONLY      1
-; O_RDWR        2
-; O_CREATE      64
+; O_RDONLY          0
+; O_WRONLY          1
+; O_RDWR            2
+; O_CREAT           64
 
 
 section .data
@@ -26,7 +27,7 @@ _start:
     ; open file
     mov     rax, 2              ; sys_open = 2
     mov     rdi, file           ; file = filename
-    mov     rsi, 66             ; O_RDWR + O_CREATE
+    mov     rsi, 66             ; O_RDWR + O_CREAT
     mov     rdx, 0644o          ; permisions
     syscall
 
@@ -37,6 +38,14 @@ _start:
     mov     rax, 0              ; sys_read = 0
     mov     rsi, input          ; buffer
     mov     rdx, 32             ; buffer length
+    syscall
+
+    ; set file offfset to beginning
+    mov     rsi, rax
+    neg     rsi                 ; beginning of file
+    mov     rax, 8              ; sys_lseek = 8
+    mov     rdi, rbx            ; fd
+    mov     rdx, 1              ; SEEK_SET
     syscall
 
     ; convert buffer to uint32
