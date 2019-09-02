@@ -13,9 +13,11 @@
 ; O_RDWR            2
 ; O_CREAT           64
 
+; max-brightness
 
 section .data
-    file db "test.txt",0
+; -- brightness-file --
+    
 
 section .bss
     input resb 32
@@ -111,8 +113,6 @@ print_uint32:
     push    rcx                 
     mov     rsi, rsp            ; save stack-pointer
     sub     rsp, 16
-
-
 
 .digit_to_ascii:
     xor     edx, edx            ; clear edx
