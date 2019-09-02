@@ -1,5 +1,8 @@
-SOURCE		:= xlight.s
-TARGET		:= xlight
+SOURCE			:= xlight.s
+TARGET			:= xlight
+INSTALL			:= install
+INSTALL_ARGS	:= -o root -g root -m 4755
+INSTALL_DIR		:= /usr/local/bin/
 
 BRIGHTNESSFILE = $(shell find /sys/class/backlight/*/brightness | head -1)
 MAXVALUE = $(shell find /sys/class/backlight/*/max_brightness | head -1 | xargs cat)
@@ -22,3 +25,9 @@ clean:
 
 # remove old files
 	rm -f *.o xlight
+
+install:
+	$(INSTALL) $(INSTALL_ARGS) $(TARGET) $(INSTALL_DIR)
+
+uninstall: clean
+	rm -f $(INSTALL_DIR)$(TARGET)
