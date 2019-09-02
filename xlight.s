@@ -39,25 +39,25 @@ _start:
 
     ; parse argument
     xor     r12, r12
-    mov     r12b, byte [rax]     ; get first char
-    cmp     r12, 43             ; check if '+'
+    mov     r12b, byte [rax]    ; get first char
+    cmp     r12, '+'            ; check if '+'
     je      .parse_pos          ; just parse
 
-    cmp     r12, 45             ; check if '-'
+    cmp     r12, '-'            ; check if '-'
     je      .parse_neg
     jmp     .exit               ; else exit program
 
 .parse_pos:
-    inc     rax
-    mov     rdi, rax
-    call    ascii_to_int
+    inc     rax                 ; skip to first digit
+    mov     rdi, rax            
+    call    ascii_to_uint32     ; convert to uint32
     mov     r12, rax
     jmp     .get_current
 
 .parse_neg:
-    inc     rax
+    inc     rax                 ; skip to first digit
     mov     rdi, rax
-    call    ascii_to_int
+    call    ascii_to_uint32     ; convert to uint32
     mov     r12, rax
     neg     r12
 
@@ -88,7 +88,7 @@ _start:
 
     ; convert buffer to uint32
     mov     rdi, input          ; buffer to convert
-    call    ascii_to_int    
+    call    ascii_to_uint32    
 
     ; handle offset
     add     rax, r12            ; add offset
@@ -127,9 +127,9 @@ _start:
 
 ; rdi:  pointer to ascii-string
 ; function terminates at first non digit
-ascii_to_int:
+ascii_to_uint32:
     movzx   eax, byte [rdi]     ; first digit
-    sub     eax, 48             ; converts ascii to number
+    sub     eax, '0'            ; converts ascii to number
     cmp     al, 9               ; check if its [0..9]
     jbe     .loop_start         ; begin loop, else return 0
 
@@ -146,7 +146,7 @@ ascii_to_int:
 .loop_start:
     inc     rdi                 ; next character
     movzx   ecx, byte [rdi]     ; current digit
-    sub     ecx, 48             ; converts ascii to number
+    sub     ecx, '0'            ; converts ascii to number
     cmp     cl, 9               ; check if its [0..9]
     jbe     .prep_next          ; add value
     
@@ -168,7 +168,7 @@ print_uint32:
 .digit_to_ascii:
     xor     edx, edx            ; clear edx
     div     ecx                 ; eax/10 with remainder in edx
-    add     edx, 48             ; digit to ascii
+    add     edx, '0'            ; digit to ascii
     dec     rsi
     mov     [rsi], dl           ; put digit into write buffer
 
