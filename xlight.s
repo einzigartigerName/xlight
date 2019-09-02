@@ -14,11 +14,9 @@
 ; O_CREAT           64
 
 ; max-brightness
-MAX_VALUE equ 1515
 
 section .data
 ; -- brightness-file --
-file db "/sys/class/backlight/intel_backlight/brightness",0
     
 
 section .bss
