@@ -14,9 +14,11 @@
 ; O_CREAT           64
 
 ; max-brightness
+MAX_VALUE equ 1515
 
 section .data
 ; -- brightness-file --
+file db "/sys/class/backlight/intel_backlight/brightness",0
     
 
 section .bss
@@ -26,6 +28,40 @@ section .text
     global _start
 
 _start:
+    ; check for correct amount of args
+    pop     rax                 ; get argc
+    cmp     rax, 2              ; correct amount of args?
+    jne     .exit               ; exit if more/less than one argument
+
+    ; get argv[1]
+    pop     rax                 ; skip first arg, is just program-name
+    pop     rax                 ; argv[1]
+
+    ; parse argument
+    xor     r12, r12
+    mov     r12b, byte [rax]     ; get first char
+    cmp     r12, 43             ; check if '+'
+    je      .parse_pos          ; just parse
+
+    cmp     r12, 45             ; check if '-'
+    je      .parse_neg
+    jmp     .exit               ; else exit program
+
+.parse_pos:
+    inc     rax
+    mov     rdi, rax
+    call    ascii_to_int
+    mov     r12, rax
+    jmp     .get_current
+
+.parse_neg:
+    inc     rax
+    mov     rdi, rax
+    call    ascii_to_int
+    mov     r12, rax
+    neg     r12
+
+.get_current:
     ; open file
     mov     rax, 2              ; sys_open = 2
     mov     rdi, file           ; file = filename
@@ -54,8 +90,22 @@ _start:
     mov     rdi, input          ; buffer to convert
     call    ascii_to_int    
 
-    add     rax, 100            ; add 100 to number
+    ; handle offset
+    add     rax, r12            ; add offset
+    cmp     rax, MAX_VALUE      ; check if new value bigger than MAX_VALUE
+    jge     .write_max
+    cmp     rax, 0              ; check if lower than 0
+    jle     .write_min
+    jmp     .write_value        ; else write value
 
+.write_max:
+    mov     rax, MAX_VALUE
+    jmp     .write_value
+
+.write_min:
+    xor     rax, rax
+
+.write_value:
     ; write new number to file
     mov     rdi, rax            ; uint32 to write
     mov     rsi, rbx            ; fd to write number to
@@ -66,6 +116,7 @@ _start:
     mov     rdi, rbx            ; file to close
     syscall
 
+.exit:
     ; Exit
     mov     rax, 60             ; sys_exit = 60
     mov     rdi, 0              ; return value
