@@ -33,7 +33,7 @@ man:
 # generate man-page with specific values
 	@echo ".TH xlight 1" > $(MAN)
 	@echo ".SH NAME" >> $(MAN)
-	@echo "xlight \- extremly lightweight and simple brightness control" >> $(MAN)
+	@echo "xlight \- extremely lightweight and simple brightness control" >> $(MAN)
 	@echo ".SH SYNOPSIS" >> $(MAN)
 	@echo ".sp" >> $(MAN)
 	@echo "\fIxlight\fR" >> $(MAN)
@@ -41,7 +41,7 @@ man:
 	@echo ".SH DESCRIPTION" >> $(MAN)
 	@echo ".B xlight" >> $(MAN)
 	@echo "controls your brightness by directly manipulating the brightness value between 0 and $(MAXVALUE) \
-	in the brightness-file. The brightness value is calculated by adding the given offset \
+	in the brightness file. The brightness value is calculated by adding the given offset \
 	to the current value and applying the changes." >> $(MAN)
 	@echo ".SH OPTIONS" >> $(MAN)
 	@echo ".TP" >> $(MAN)
@@ -53,7 +53,7 @@ man:
 	@echo "Decreases the brightness value by the given offset." >> $(MAN)
 	@echo "Should the value be greater then the maximum, it will be set to $(MAXVALUE)." >> $(MAN)
 	@echo ".SH BRIGHTNESS FILE" >> $(MAN)
-	@echo "xlight will apply all changes to this file. If it is NOT the correct file, manualy change \
+	@echo "xlight will apply all changes to this file. If it is NOT the correct file, manually change \
 	the value \fBBRIGHTNESSFILE\fR and \fBMAXVALUE\fR in the Makefile." >> $(MAN)
 	@echo ".sp" >> $(MAN)
 	@echo "$(BRIGHTNESSFILE)" >> $(MAN)

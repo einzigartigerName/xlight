@@ -1,5 +1,5 @@
 # xlight
-This is an extremly simple and lightweight xbacklight alternative for x86_64 Linux.\
+This is an extremely simple and lightweight xbacklight alternative for x86_64 Linux.\
 The installed file-size is less than 9kB.
 ### Usage
 ```bash
@@ -20,9 +20,11 @@ git clone https://github.com/einzigartigerName/xlight.git
 cd xlight
 make && sudo make install
 ```
-It will auto-configured on build
+It will auto-configured on build.\
+There are also options for only installing the binary/man page (`install-bin`/`install-man`).
 
 ### Uninstall
 ```bash
 sudo make uninstall
 ```
+Options for only uninstalling the binary/man page are available (`uninstall-bin`/`uninstall-man`).
