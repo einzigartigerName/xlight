@@ -1,6 +1,6 @@
 # xlight
 This is an extremely simple and lightweight xbacklight alternative for x86_64 Linux.\
-The installed file-size is less than 1.2kB.
+The installed file-size is less than 1.1kB.
 ### Usage
 ```bash
 xlight [+-[0-1234]]

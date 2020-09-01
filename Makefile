@@ -24,7 +24,9 @@ build:
 	nasm $(SOURCE) -o $(TARGET).o -f elf64
 	ld.lld $(TARGET).o -o $(TARGET)
 
-	@strip --strip-unneeded $(TARGET)
+# remove unneeded stuff
+	strip --strip-unneeded $(TARGET)
+	objcopy --remove-section .comment $(TARGET)
 
 # ---------------------------------------------------------
 #							MAN

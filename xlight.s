@@ -71,7 +71,7 @@ _start:
 
     ; Read from file
     mov     rdi, rax            ; fd from input-file
-    mov     rax, 0              ; sys_read = 0
+    xor     eax, eax            ; sys_read = 0
     mov     rsi, input          ; buffer
     mov     rdx, 32             ; buffer length
     syscall
@@ -117,7 +117,7 @@ _start:
 .exit:
     ; Exit
     mov     rax, 60             ; sys_exit = 60
-    mov     rdi, 0              ; return value
+    xor     edi, edi            ; return value
     syscall
 
 
