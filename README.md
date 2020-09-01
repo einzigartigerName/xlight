@@ -1,6 +1,6 @@
 # xlight
 This is an extremely simple and lightweight xbacklight alternative for x86_64 Linux.\
-The installed file-size is less than 9kB.
+The installed file-size is less than 1.2kB.
 ### Usage
 ```bash
 xlight [+-[0-1234]]
@@ -12,7 +12,7 @@ Although the performance is not to suffer, no focus will be placed on it.
 
 ### Install
 To build this you need:
-* ld - The GNU linker
+* lld - The LLVM Linker
 * nsam
 
 ```bash

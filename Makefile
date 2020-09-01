@@ -22,7 +22,7 @@ build:
 
 # build
 	nasm $(SOURCE) -o $(TARGET).o -f elf64
-	ld $(TARGET).o -o $(TARGET)
+	ld.lld $(TARGET).o -o $(TARGET)
 
 	@strip --strip-unneeded $(TARGET)
 
